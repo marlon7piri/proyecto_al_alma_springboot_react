@@ -1,0 +1,4 @@
+GET http://localhost:8080/api/productos
+###
+DELETE  http://localhost:8080/api/gastos/7
+
