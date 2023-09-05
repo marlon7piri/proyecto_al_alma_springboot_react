@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @EnableTransactionManagement
 @Transactional
+
 public class GastosServices {
 
   HashMap<String, Object> datos = new HashMap<>();
@@ -28,30 +28,28 @@ public class GastosServices {
 
   }
 
-  public Gastos saveGasto(Gastos gasto) {
-    return gastosRepository.save(gasto);
-  }     
+  public ResponseEntity<Object> saveGasto(Gastos gasto) {
+
+    gastosRepository.save(gasto);
+    return new ResponseEntity<>(gasto, HttpStatus.CREATED);
+  }
 
   public ResponseEntity<Object> deleteGasto(Long id) {
 
-    
-
     boolean existgasto = gastosRepository.existsById(id);
-    Optional <Gastos> gastofound = gastosRepository.findById(id);
-
+    Optional<Gastos> gastofound = gastosRepository.findById(id);
 
     if (!existgasto) {
       datos.put("error", true);
       datos.put("message", "No existe el id");
-     
 
       return new ResponseEntity<>(datos, HttpStatus.CONFLICT);
 
     } else {
       gastosRepository.deleteById(id);
-      
+
       datos.put("message", "Borrado correctamente");
-       
+
       return new ResponseEntity<>(gastofound, HttpStatus.ACCEPTED);
     }
 

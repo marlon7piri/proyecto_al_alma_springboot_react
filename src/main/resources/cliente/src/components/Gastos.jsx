@@ -15,7 +15,7 @@ function Gastos() {
       <h1 className='mb-10'>Gastos</h1>
       <h2 className='text-gray-900 font-bold'>Gasto Total: <span className='
       text-sky-900 font-black text-2xl'>${gastotatal}</span></h2>
-      <BusquedaInput/>
+      
      
    <TablaDeGastos/>
   

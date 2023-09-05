@@ -3,11 +3,18 @@ import { DataContext } from "../data/DataProvider";
 import { Toaster} from 'react-hot-toast'
 
 function TablaDeGastos() {
-  const {  resultsearch, deleteGastos,isLoading} = useContext(DataContext);
-
+  const {   deleteGastos,isLoading,search,gastos,handlerChange,optionSelected,setShadow,setGastos} = useContext(DataContext);
+ 
+  const [filter, setFilter] = useState("todos")
 
  
 
+  const categorias = [
+    "todos",
+    "cocina",
+    "barra",
+    
+  ];
 
 const handlerDelete = async (id)=>{
  
@@ -16,11 +23,82 @@ const handlerDelete = async (id)=>{
 }
 
 
+  let result =[]
+  if (!search) {
+    result = gastos
+  } else {
+    result = gastos.filter((gasto) => gasto.motivo.toLowerCase().includes(search.toLowerCase()))
+ 
+ 
+  }
+
+  const handlerfilterChange = (e)=>{
+    setFilter(e.target.value)
+    console.log(e.target.value);
+  }
+
+  const handlerChangeCategoria =()=>{
+    
+
+    if(filter ==="todos"){
+return result
+    }else{
+      result  =  gastos.filter((gasto)=>{
+       gasto.categoria === filter
+      console.log(result);
+        
+            }) 
+             
+    }
+   
+    
+  }
+
+
+   result = handlerChangeCategoria()
 
 
 
   return (
     <div className=" w-full ">
+      <div className="pb-4 bg-white dark:bg-gray-900 ">
+      <label className="sr-only">Search</label>
+      <div className="relative mt-1 flex justify-between">
+        <input
+          type="text"
+          id="table-search" 
+          className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Buscar"
+          onChange={handlerChange}
+        />
+
+        <div className="flex gap-4 justify-center items-center">
+          <label htmlFor="">Filtrar por Categoria:</label>
+          <select
+            value={optionSelected}
+            id=""
+            className="bg-gray-100 p-2 rounded-md"
+            onChange={handlerfilterChange}
+          >
+            {categorias.map((categoria) => {
+              return (
+                <option value={categoria} key={categoria}>
+                  {categoria.charAt(0).toUpperCase() + categoria.slice(1)}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+
+        <button
+          onClick={() => setShadow(true)}
+          type="button"
+          className="focus:outline-none text-white bg-sky-500 hover:bg-sky-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 transition-colors duration-300 ml-4"
+        >
+          Nuevo
+        </button>
+      </div>
+    </div>
       <div className=" w-full  relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="table">
           <thead>
@@ -33,7 +111,7 @@ const handlerDelete = async (id)=>{
             </tr>
           </thead>
           <tbody>
-            {resultsearch.map((gasto) => {
+            {result.map((gasto) => {
               return (
                 <tr key={gasto.id}>
                   {/* <th scope="row">{gasto.id}</th> */}
@@ -42,7 +120,7 @@ const handlerDelete = async (id)=>{
                   {gasto.monto > 200 ? <td className="text-red-700 font-black">{gasto.monto.toFixed(2)}</td>  : <td className="text-green-500">{gasto.monto.toFixed(2)}</td>}
                     <td>{gasto.categoria}</td>
                   
-                  <td>{JSON.stringify(gasto.fecha).substring(1,10)}</td>
+                  <td>{JSON.stringify(gasto.fecha).substring(1,9)}</td>
                 
                   <td>
                  {!isLoading ? ( <button

@@ -23,12 +23,12 @@ public class Productos {
   @Column(name = "categoria")
   private String categoria;
   @Column(name = "cantidad")
-  private int cantidad;
+  private Double cantidad;
   @Column(name = "precio")
   private Double precio;
   @Column(name = "preciodecompra")
   private Double preciodecompra;
   @Column(name = "unidad")
-  private int unidad;
+  private String unidad;
 
 }

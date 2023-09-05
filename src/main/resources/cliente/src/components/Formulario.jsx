@@ -24,7 +24,7 @@ function Formulario() {
   const hanlderSubmit = async (e) => {
     e.preventDefault();
     setIsloading(true)
-    console.log(newGasto.monto);
+ 
     await crearGasto(newGasto);
     setNewMotivo("")
     setNewmonto("")

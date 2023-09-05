@@ -90,7 +90,7 @@ button:focus-visible {
   
   margin: auto;
   padding: 1rem;
-  width: 60%;
+  width: 50%;
   min-height: 600px;
   position: relative;
   overflow: scroll;

@@ -136,7 +136,7 @@ setHora(date.toString().substring(0,15))
 
 
 <div className=" w-full  h-full relative  p-4 ml-24">
-<span className='fixed top-4 right-24'>fecha actual : {Hora}</span>
+<span className='absolute top-4 right-24'>fecha actual : {Hora}</span>
    { ventana.gastos ? <Gastos/> : ""}
    {ventana.presupuesto ? <Presupuestos/> : ""}
    {ventana.categorias ? <Categorias/> : ""}
